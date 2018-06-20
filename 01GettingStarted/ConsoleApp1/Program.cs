@@ -10,7 +10,7 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             Console.WriteLine("Hello world!");
-            //Waiting for user input to close console
+            //Waiting for user input enter key to close console
             Console.ReadKey();
         }
     }
