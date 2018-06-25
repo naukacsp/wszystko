@@ -8,6 +8,22 @@ namespace _02_Basics
         private const int MORE_THAN = 10;
         private const int LESS_THAN = 0;
 
+        public static string NameLoop(string firstName)
+        {
+            while (true)
+            {
+                Console.Write("Enter the new first name and press enter key: ");
+                firstName = Console.ReadLine();
+
+                if (Regex.IsMatch(firstName, @"^[a-zA-Z]+$"))
+                {
+                    return firstName;
+                }
+                Console.WriteLine("Please enter characters value!");
+            }
+
+        }
+
         static void Main(string[] args)
         {
             string firstName = "Jane";
@@ -42,20 +58,6 @@ namespace _02_Basics
 
             Console.ReadLine();
         }
-        public static string NameLoop(string firstName)
-        {
-            while (true)
-            {
-                Console.Write("Enter the new first name and press enter key:: ");
-                firstName = Console.ReadLine();
-
-                if (Regex.IsMatch(firstName, @"^[a-zA-Z]+$"))
-                {
-                    return firstName;
-                }
-                Console.WriteLine("Please enter characters value!");
-            }
-
-        }
+      
     }
 }
