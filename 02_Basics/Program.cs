@@ -11,6 +11,7 @@ namespace _02_Basics
             string lastName = "Doe";
 
             Console.WriteLine("Name: " + firstName + " " + lastName);
+            //todo: move the while loop to a separate method.
             while (true)
             {
                 Console.Write("Enter the new first name and press enter key:: ");
@@ -39,7 +40,7 @@ namespace _02_Basics
                 Console.WriteLine("Please enter an integer value!");
             }
 
-            if (number > 10 || number < 0)
+            if (number > 10 || number < 0)  //todo: move "maginc numbers" to constsnts
             {
                 Console.WriteLine("Hey! The number should be 0 or more and 10 or less!");
             }
