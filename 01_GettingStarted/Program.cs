@@ -1,16 +1,16 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace ConsoleApp1
+namespace _01_GettingStarted
 {
-    //Hello world programm
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello world!");
-            //Waiting for user input enter key to close console
+            Console.WriteLine("Hello World!");
             Console.ReadKey();
         }
     }
