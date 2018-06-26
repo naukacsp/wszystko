@@ -24,6 +24,17 @@ namespace _02_Basics
 
         }
 
+        static void AddFive(ref int number)
+        {
+            number = number + 5;
+        }
+
+        static void TakeFive(int number)
+        {
+            number = number - 5;
+            Console.WriteLine("I'm inside function: " + number);
+        }
+
         static void Main(string[] args)
         {
             string firstName = "Jane";
@@ -46,18 +57,26 @@ namespace _02_Basics
                 }
                 Console.WriteLine("Please enter an integer value!");
             }
+            while (true)
+            {
+                if (number > MORE_THAN || number < LESS_THAN)
+                {
+                    Console.WriteLine("Hey! The number should be 0 or more and 10 or less!");
+                }
+                else
+                {
+                    Console.WriteLine("Good job!");
+                    break;
+                }
+                AddFive(ref number); //referencja taka jak w wskazniki
+                Console.WriteLine(number);
+                TakeFive(number);
+                Console.WriteLine(number);
 
-            if (number > MORE_THAN || number < LESS_THAN)
-            {
-                Console.WriteLine("Hey! The number should be 0 or more and 10 or less!");
-            }
-            else
-            {
-                Console.WriteLine("Good job!");
             }
 
             Console.ReadLine();
         }
-      
+
     }
 }
