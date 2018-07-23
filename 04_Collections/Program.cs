@@ -21,11 +21,11 @@ namespace _04_Collections
                 "Maciej Walus"
             };
 
-            ListMenu(listOfNames);  //todo: rename this method to soething more intuitive
+            ListActionMenuItems(listOfNames);
 
             string[] arrayWithElementsFromList = listOfNames.ToArray();
             ShowArray(arrayWithElementsFromList);
-            
+
             Dictionary<string, int> howOld = new Dictionary<string, int>()
             {
                 {"Jerry Doe", 11 },
@@ -34,26 +34,20 @@ namespace _04_Collections
                 {"John Doe", 47 }
             };
             string name = "Jezebel Doe";
-            if (!howOld.ContainsKey(name))
-            {
-                howOld.Add(name, 22);
-                AddRecordToDictionary(howOld);
-            }
-            ShowDictionaryByAge(howOld);
-            ShowDictionaryByName(howOld);
-            //todo: add case with ContainstKey, containsValue
+            int age = 22;
+            var whatHold = !howOld.ContainsKey(name);
+            CheckIfKeyInDictonary(howOld, name, age);
+            CheckIfValueInDictonary(howOld, age);
+            //ShowDictionaryByAge(howOld);
+            //ShowDictionaryByName(howOld);
 
 
             Queue queue = new Queue();
             queue.Enqueue(3);
             queue.Enqueue(2);
             queue.Enqueue(1);
-            queue.Dequeue();
             queue.Enqueue("Four");
-            foreach (var value in queue)
-            {
-                Console.WriteLine(value);
-            }
+            ShowQueque(queue);
 
             while (queue.Count > 0)
             {
@@ -64,10 +58,13 @@ namespace _04_Collections
             stackOfInts.Push(1);
             stackOfInts.Push(2);
             stackOfInts.Push(3);
+            int peek = stackOfInts.Peek();
+            Console.WriteLine("Element at the top:");
+            Console.WriteLine(peek);
             int pop = stackOfInts.Pop();
             Console.WriteLine("Element popped from top of Stack:");
             Console.WriteLine(pop);
-            int peek = stackOfInts.Peek();
+            peek = stackOfInts.Peek();
             Console.WriteLine("Element now at the top:");
             Console.WriteLine(peek);
 
@@ -75,9 +72,34 @@ namespace _04_Collections
             Console.ReadKey();
         }
 
+        private static void ShowQueque(Queue queue)
+        {
+            foreach (var value in queue)
+            {
+                Console.WriteLine(value);
+            }
+        }
+
+        private static void CheckIfValueInDictonary(Dictionary<string, int> howOld, int age)
+        {
+            if (howOld.ContainsValue(age))
+            {
+                Console.WriteLine("In Doe family is at least one person who is {0} years old.", age);
+            }
+        }
+
+        private static void CheckIfKeyInDictonary(Dictionary<string, int> howOld, string name, int age)
+        {
+            if (!howOld.ContainsKey(name))
+            {
+                howOld.Add(name, age);
+                Console.WriteLine("Jezebel added!");
+            }
+        }
+
         private static void ExampleArrayOperations()
         {
-/* Operations on array */
+            /* Operations on array */
             Console.Write("Enter the number : ");
             string readLine = Console.ReadLine();
             int howMany;
@@ -117,41 +139,36 @@ namespace _04_Collections
             }
         }
 
-        private static void ListMenu(List<string> listOfNames)
+        private static void ListActionMenuItems(List<string> listOfNames) //todo: rename listOfNames
         {
             bool endOfLoop = true;
 
-            while (endOfLoop)    //todo: refactor so that the condition is inside while
+            while (endOfLoop)
             {
                 Console.Write("\n***\n" +
                               "If you want to hear list of names press 1 and enter,\n" +
-                              "if you want to add record on the top press 2 and enter, \n" +   
+                              "if you want to add record on the top press 2 and enter, \n" +
                               "if you want to add record on the bottom press 3 and enter, \n" +
                               "if you want to delete record on the top press 4 and enter, \n" +
                               "if you want to delete record on the bottom press 5 and enter, \n" +
-                              "if you want to read list of names press 6 and enter \n" +        //todo: what to do if user press 7?
-                              "if you want to end press 7 and enter: \n" +      //todo: how about "if you want to exit,do something.."
+                              "if you want to read list of names press 6 and enter \n" +
+                              "if you want to end press 7 and enter: \n" +
                               "***\n");
 
-                var readLine = Console.ReadLine();  //todo: bulletproof this against something which is not a number
-
+                var readLine = Console.ReadLine();
                 int chose;
-                int.TryParse(readLine, out chose);
+                bool isNumerical = int.TryParse(readLine, out chose);
 
                 switch (chose)      //todo: this switch breaks SRP becuase is operates on the list and manages break of the loop
                 {
-                    case 1:     //todo: magic number
+                    case 1:     //todo: magic number, make const as strings
                         ReadList(listOfNames);
                         break;
                     case 2:
-                        Console.WriteLine("Give me a name and surname and press enter.");
-                        string userGiveAName = Console.ReadLine();
-                        listOfNames.Insert(0, userGiveAName);      
+                        AddRecordOnTheTopOfList(listOfNames); //todo: without 
                         break;
                     case 3:
-                        Console.WriteLine("Give me a name and surname and press enter.");
-                        userGiveAName = Console.ReadLine();
-                        listOfNames.Insert(listOfNames.Count, userGiveAName);   //todo: replace with List.Add()
+                        AddRecordOnTheBootomOfList(listOfNames);
                         break;
                     case 4:
                         Console.WriteLine("\nYou deleted item from the top of the list " + listOfNames[listOfNames.Count - 1] + "!\n");
@@ -162,12 +179,9 @@ namespace _04_Collections
                         listOfNames.RemoveAt(listOfNames.Count - 1);
                         break;
                     case 6:
-                        foreach (string name in listOfNames)
-                        {
-                            Console.WriteLine(name);
-                        }
+                        ShowList(listOfNames);
                         break;
-                    case 7:
+                    case 7: //if for this outside
                         endOfLoop = false;
                         break;
                     default:
@@ -180,7 +194,29 @@ namespace _04_Collections
             }
         }
 
-        private static void ShowArray(string[] tableStrings)
+        private static void ShowList(List<string> listOfNames)
+        {
+            foreach (string name in listOfNames)
+            {
+                Console.WriteLine(name);
+            }
+        }
+
+        private static void AddRecordOnTheBootomOfList(List<string> listOfNames)
+        {
+            Console.WriteLine("Give me a name and surname and press enter.");
+            string userGiveAName = Console.ReadLine();
+            listOfNames.Add(userGiveAName);
+        }
+
+        private static void AddRecordOnTheTopOfList(List<string> listOfNames)
+        {
+            Console.WriteLine("Give me a name and surname and press enter.");
+            string userGiveAName = Console.ReadLine();
+            listOfNames.Insert(0, userGiveAName);
+        }
+
+        private static void ShowArray(string[] tableStrings) //todo: not show, print for console
         {
             Console.WriteLine("Look, it is your table:");
             foreach (string dataRecord in tableStrings)
