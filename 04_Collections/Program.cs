@@ -4,14 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Speech.Synthesis;
 
-
 namespace _04_Collections
 {
     internal class Program
     {
-        static void Main()
+        private static void Main()
         {
-
             ExampleArrayOperations();
 
             /* Operation on list */
@@ -41,7 +39,6 @@ namespace _04_Collections
             PrintDictionaryByName(howOld);
             AddRecordToDictionary(howOld);
 
-
             Queue queue = new Queue();
             queue.Enqueue(3);
             queue.Enqueue(2);
@@ -67,7 +64,6 @@ namespace _04_Collections
             peek = stackOfInts.Peek();
             Console.WriteLine("Element now at the top:");
             Console.WriteLine(peek);
-
 
             Console.ReadKey();
         }
@@ -106,7 +102,6 @@ namespace _04_Collections
 
         private static void ExampleArrayOperations()
         {
-
             bool endOfLoop = true;
 
             while (endOfLoop)
@@ -115,11 +110,10 @@ namespace _04_Collections
                 string readLine = Console.ReadLine();
                 try
                 {
-                    int howMany = int.Parse(readLine); //todo: surround with IF
-
+                    int howMany = int.Parse(readLine);
                     int[] userArray = new int[howMany];
                     userArray = CreateArrayOfRandomNumbers(
-                        userArray); //todo: rename to "CreateArrayOfRandomNumbers    (prawdopodobnie, argumentem bzie teraz how many
+                        userArray);
 
                     Array.Sort(userArray);
 
@@ -134,11 +128,8 @@ namespace _04_Collections
                 {
                     Console.WriteLine("{0}: Not accepted value", readLine);
                 }
-
             }
-
         }
-
 
         private static int[] CreateArrayOfRandomNumbers(int[] userArray)
         {
@@ -174,41 +165,44 @@ namespace _04_Collections
                               "if you want to read list of names press 6 and enter \n" +
                               "if you want to end press 7 and enter: \n" +
                               "***\n");
-            
+
                 string readLine = Console.ReadLine();
                 if (readLine == "7")
                 {
                     break;
                 }
-                switch (readLine) 
+                switch (readLine)
                 {
-                    case ConstForMenuFirst:   
+                    case ConstForMenuFirst:
                         ReadList(names);
                         break;
+
                     case ConstForMenuSecond:
-                        AddRecordOnTopOfList(names); 
+                        AddRecordOnTopOfList(names);
                         break;
+
                     case ConstForMenuThird:
                         AddRecordOnBootomOfList(names);
                         break;
+
                     case ConstForMenuFourth:
                         Console.WriteLine("\nYou deleted item from the top of the list " + names[names.Count - 1] + "!\n");
                         names.RemoveAt(0);
                         break;
+
                     case ConstForMenuFifth:
                         Console.WriteLine("\nYou deleted item from the bottom of the list: " + names[names.Count - 1] + "!\n");
                         names.RemoveAt(names.Count - 1);
                         break;
+
                     case ConstForMenuSixth:
                         PrintList(names);
                         break;
+
                     default:
                         Console.WriteLine("I don't understand you. Please chose from numbers 1-7");
                         break;
-
                 }
-
-
             }
         }
 
@@ -274,9 +268,6 @@ namespace _04_Collections
             int age;
             int.TryParse(readAge, out age);
             howOld.Add(readName, age);
-
         }
-
     }
-
 }
