@@ -15,16 +15,16 @@ namespace _04_Collections
             ExampleArrayOperations();
 
             /* Operation on list */
-            List<string> listOfNames = new List<string>()
+            List<string> names = new List<string>()
             {
                 "Adrianna Bielicz",
                 "Maciej Walus"
             };
 
-            ListActionMenuItems(listOfNames);
+            ListActionMenuItems(names);
 
-            string[] arrayWithElementsFromList = listOfNames.ToArray();
-            ShowArray(arrayWithElementsFromList);
+            string[] arrayWithElementsFromList = names.ToArray();
+            PrintArray(arrayWithElementsFromList);
 
             Dictionary<string, int> howOld = new Dictionary<string, int>()
             {
@@ -35,11 +35,11 @@ namespace _04_Collections
             };
             string name = "Jezebel Doe";
             int age = 22;
-            var whatHold = !howOld.ContainsKey(name);
             CheckIfKeyInDictonary(howOld, name, age);
             CheckIfValueInDictonary(howOld, age);
-            //ShowDictionaryByAge(howOld);
-            //ShowDictionaryByName(howOld);
+            PrintDictionaryByAge(howOld);
+            PrintDictionaryByName(howOld);
+            AddRecordToDictionary(howOld);
 
 
             Queue queue = new Queue();
@@ -47,7 +47,7 @@ namespace _04_Collections
             queue.Enqueue(2);
             queue.Enqueue(1);
             queue.Enqueue("Four");
-            ShowQueque(queue);
+            PrintQueque(queue);
 
             while (queue.Count > 0)
             {
@@ -72,7 +72,14 @@ namespace _04_Collections
             Console.ReadKey();
         }
 
-        private static void ShowQueque(Queue queue)
+        private const string ConstForMenuFirst = "1";
+        private const string ConstForMenuSecond = "2";
+        private const string ConstForMenuThird = "3";
+        private const string ConstForMenuFourth = "4";
+        private const string ConstForMenuFifth = "5";
+        private const string ConstForMenuSixth = "6";
+
+        private static void PrintQueque(Queue queue)
         {
             foreach (var value in queue)
             {
@@ -99,22 +106,37 @@ namespace _04_Collections
 
         private static void ExampleArrayOperations()
         {
-            /* Operations on array */
-            Console.Write("Enter the number : ");
-            string readLine = Console.ReadLine();
-            int howMany;
-            int.TryParse(readLine, out howMany); //todo: surround with IF
-            //howMany = int.Parse(readLine);
 
-            int[] userArray = new int[howMany];
-            userArray = CreateArrayOfRandomNumbers(userArray); //todo: rename to "CreateArrayOfRandomNumbers    (prawdopodobnie, argumentem bzie teraz how many
+            bool endOfLoop = true;
 
-            Array.Sort(userArray);
-
-            foreach (int number in userArray)
+            while (endOfLoop)
             {
-                Console.WriteLine(number);
+                Console.Write("Enter the number : ");
+                string readLine = Console.ReadLine();
+                try
+                {
+                    int howMany = int.Parse(readLine); //todo: surround with IF
+
+                    int[] userArray = new int[howMany];
+                    userArray = CreateArrayOfRandomNumbers(
+                        userArray); //todo: rename to "CreateArrayOfRandomNumbers    (prawdopodobnie, argumentem bzie teraz how many
+
+                    Array.Sort(userArray);
+
+                    foreach (int number in userArray)
+                    {
+                        Console.WriteLine(number);
+                    }
+
+                    endOfLoop = false;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("{0}: Not accepted value", readLine);
+                }
+
             }
+
         }
 
 
@@ -129,21 +151,19 @@ namespace _04_Collections
             return userArray;
         }
 
-        private static void ReadList(List<string> listOfNames)
+        private static void ReadList(List<string> names)
         {
             SpeechSynthesizer synth = new SpeechSynthesizer();
-            foreach (string name in listOfNames)
+            foreach (string name in names)
             {
                 Console.WriteLine(name);
                 synth.Speak(name);
             }
         }
 
-        private static void ListActionMenuItems(List<string> listOfNames) //todo: rename listOfNames
+        private static void ListActionMenuItems(List<string> names) //todo: rename names
         {
-            bool endOfLoop = true;
-
-            while (endOfLoop)
+            while (true)
             {
                 Console.Write("\n***\n" +
                               "If you want to hear list of names press 1 and enter,\n" +
@@ -154,35 +174,33 @@ namespace _04_Collections
                               "if you want to read list of names press 6 and enter \n" +
                               "if you want to end press 7 and enter: \n" +
                               "***\n");
-
-                var readLine = Console.ReadLine();
-                int chose;
-                bool isNumerical = int.TryParse(readLine, out chose);
-
-                switch (chose)      //todo: this switch breaks SRP becuase is operates on the list and manages break of the loop
+            
+                string readLine = Console.ReadLine();
+                if (readLine == "7")
                 {
-                    case 1:     //todo: magic number, make const as strings
-                        ReadList(listOfNames);
+                    break;
+                }
+                switch (readLine) 
+                {
+                    case ConstForMenuFirst:   
+                        ReadList(names);
                         break;
-                    case 2:
-                        AddRecordOnTheTopOfList(listOfNames); //todo: without 
+                    case ConstForMenuSecond:
+                        AddRecordOnTopOfList(names); 
                         break;
-                    case 3:
-                        AddRecordOnTheBootomOfList(listOfNames);
+                    case ConstForMenuThird:
+                        AddRecordOnBootomOfList(names);
                         break;
-                    case 4:
-                        Console.WriteLine("\nYou deleted item from the top of the list " + listOfNames[listOfNames.Count - 1] + "!\n");
-                        listOfNames.RemoveAt(0);
+                    case ConstForMenuFourth:
+                        Console.WriteLine("\nYou deleted item from the top of the list " + names[names.Count - 1] + "!\n");
+                        names.RemoveAt(0);
                         break;
-                    case 5:
-                        Console.WriteLine("\nYou deleted item from the bottom of the list: " + listOfNames[listOfNames.Count - 1] + "!\n");
-                        listOfNames.RemoveAt(listOfNames.Count - 1);
+                    case ConstForMenuFifth:
+                        Console.WriteLine("\nYou deleted item from the bottom of the list: " + names[names.Count - 1] + "!\n");
+                        names.RemoveAt(names.Count - 1);
                         break;
-                    case 6:
-                        ShowList(listOfNames);
-                        break;
-                    case 7: //if for this outside
-                        endOfLoop = false;
+                    case ConstForMenuSixth:
+                        PrintList(names);
                         break;
                     default:
                         Console.WriteLine("I don't understand you. Please chose from numbers 1-7");
@@ -194,29 +212,29 @@ namespace _04_Collections
             }
         }
 
-        private static void ShowList(List<string> listOfNames)
+        private static void PrintList(List<string> names)
         {
-            foreach (string name in listOfNames)
+            foreach (string name in names)
             {
                 Console.WriteLine(name);
             }
         }
 
-        private static void AddRecordOnTheBootomOfList(List<string> listOfNames)
+        private static void AddRecordOnBootomOfList(List<string> names)
         {
             Console.WriteLine("Give me a name and surname and press enter.");
             string userGiveAName = Console.ReadLine();
-            listOfNames.Add(userGiveAName);
+            names.Add(userGiveAName);
         }
 
-        private static void AddRecordOnTheTopOfList(List<string> listOfNames)
+        private static void AddRecordOnTopOfList(List<string> names)
         {
             Console.WriteLine("Give me a name and surname and press enter.");
             string userGiveAName = Console.ReadLine();
-            listOfNames.Insert(0, userGiveAName);
+            names.Insert(0, userGiveAName);
         }
 
-        private static void ShowArray(string[] tableStrings) //todo: not show, print for console
+        private static void PrintArray(string[] tableStrings) //todo: not Print, print for console
         {
             Console.WriteLine("Look, it is your table:");
             foreach (string dataRecord in tableStrings)
@@ -225,7 +243,7 @@ namespace _04_Collections
             }
         }
 
-        private static void ShowDictionaryByAge(Dictionary<string, int> howOld)
+        private static void PrintDictionaryByAge(Dictionary<string, int> howOld)
         {
             Console.WriteLine("From the youngest to the oldest in Doe family:");
             foreach (KeyValuePair<string, int> person in howOld.OrderBy(person => person.Value))        //todo: order by move to separate variable
@@ -234,7 +252,7 @@ namespace _04_Collections
             }
         }
 
-        private static void ShowDictionaryByName(Dictionary<string, int> howOld)
+        private static void PrintDictionaryByName(Dictionary<string, int> howOld)
         {
             Console.WriteLine("Sorted by Name in Doe family:");
             foreach (KeyValuePair<string, int> person in howOld.OrderBy(person => person.Key))
