@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace _05_Classes
 {
-    class Program
+    internal class Program
     {
-        static void Main()
+        private static void Main()
         {
             Car skodaSuperb = new Car("black");
+            skodaSuperb.MakeSound();
+            Car audiA8 = new Audi();
+            audiA8.MakeSound();
+            UnusualCar googleCar = new SelfDrivingCar();
+            Console.WriteLine(googleCar.Describe());
             //
             //Console.WriteLine(skodaSuperb.Describe);
             Console.Read();

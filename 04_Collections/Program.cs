@@ -8,6 +8,15 @@ namespace _04_Collections
 {
     internal class Program
     {
+        private const string MenuItemFirst = "1";
+        private const string MenuItemOptionAddToTopOfList = "2";    //itd.
+        private const string ConstForMenuThird = "3";
+        private const string ConstForMenuFourth = "4";
+        private const string ConstForMenuFifth = "5";
+        private const string ConstForMenuSixth = "6";
+
+        private static readonly Random RandomNumbers = new Random();
+
         private static void Main()
         {
             ExampleArrayOperations();
@@ -68,13 +77,6 @@ namespace _04_Collections
             Console.ReadKey();
         }
 
-        private const string ConstForMenuFirst = "1";
-        private const string ConstForMenuSecond = "2";
-        private const string ConstForMenuThird = "3";
-        private const string ConstForMenuFourth = "4";
-        private const string ConstForMenuFifth = "5";
-        private const string ConstForMenuSixth = "6";
-
         private static void PrintQueque(Queue queue)
         {
             foreach (var value in queue)
@@ -108,16 +110,14 @@ namespace _04_Collections
             {
                 Console.Write("Enter the number : ");
                 string readLine = Console.ReadLine();
+
                 try
                 {
                     int howMany = int.Parse(readLine);
-                    int[] userArray = new int[howMany];
-                    userArray = CreateArrayOfRandomNumbers(
-                        userArray);
 
-                    Array.Sort(userArray);
+                    int[] sortedRandomNumbers = CreateSortedRandomNumbers(howMany);
 
-                    foreach (int number in userArray)
+                    foreach (int number in sortedRandomNumbers)
                     {
                         Console.WriteLine(number);
                     }
@@ -131,13 +131,16 @@ namespace _04_Collections
             }
         }
 
-        private static int[] CreateArrayOfRandomNumbers(int[] userArray)
+        private static int[] CreateSortedRandomNumbers(int howMany)
         {
-            Random randomNumbers = new Random();
+            int[] userArray = new int[howMany];
+
             for (int i = 0; i < userArray.Length; i++)
             {
-                userArray[i] = randomNumbers.Next(0, 101);
+                userArray[i] = RandomNumbers.Next(0, 101);
             }
+
+            Array.Sort(userArray);
 
             return userArray;
         }
@@ -167,17 +170,19 @@ namespace _04_Collections
                               "***\n");
 
                 string readLine = Console.ReadLine();
-                if (readLine == "7")
+
+                if (string.Equals(readLine, "7", StringComparison.InvariantCultureIgnoreCase))
                 {
                     break;
                 }
+
                 switch (readLine)
                 {
-                    case ConstForMenuFirst:
+                    case MenuItemFirst:
                         ReadList(names);
                         break;
 
-                    case ConstForMenuSecond:
+                    case MenuItemOptionAddToTopOfList:
                         AddRecordOnTopOfList(names);
                         break;
 
@@ -228,19 +233,27 @@ namespace _04_Collections
             names.Insert(0, userGiveAName);
         }
 
-        private static void PrintArray(string[] tableStrings) //todo: not Print, print for console
+        private static void PrintArray(string[] items)
+        {
+            PrintArrayV2(items);
+        }
+
+        private static void PrintArrayV2(IEnumerable<string> items)
         {
             Console.WriteLine("Look, it is your table:");
-            foreach (string dataRecord in tableStrings)
+            foreach (string item in items)
             {
-                Console.WriteLine(dataRecord);
+                Console.WriteLine(item);
             }
         }
 
         private static void PrintDictionaryByAge(Dictionary<string, int> howOld)
         {
             Console.WriteLine("From the youngest to the oldest in Doe family:");
-            foreach (KeyValuePair<string, int> person in howOld.OrderBy(person => person.Value))        //todo: order by move to separate variable
+
+            IEnumerable<KeyValuePair<string, int>> orderedItems = howOld.OrderBy(person => person.Value).ToArray();
+
+            foreach (KeyValuePair<string, int> person in orderedItems)
             {
                 Console.WriteLine(person.Key + " is " + person.Value + " years old");
             }

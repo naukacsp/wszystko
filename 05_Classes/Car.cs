@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace _05_Classes
 {
-    class Car
+    public class Car
     {
         private string color;
+
         public Car()
         {
             Console.WriteLine("Constructor with no parameters called!");
@@ -19,9 +20,15 @@ namespace _05_Classes
             this.color = color;
             Console.WriteLine("Constructor with color parameter called!");
         }
+
         ~Car()
         {
             Console.WriteLine("Out..");
+        }
+
+        public virtual void MakeSound()
+        {
+            Console.WriteLine("Wrrrrrr!");
         }
     }
 }
