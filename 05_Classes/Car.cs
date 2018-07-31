@@ -1,24 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _05_Classes
 {
-    public class Car
+    public class Car : ICar
     {
-        private string color;
+        private readonly string _color;
+        private string _name;
 
-        public Car()
+        public string Describe()
         {
-            Console.WriteLine("Constructor with no parameters called!");
+            return "Hello, I'm a car and my name is " + Name;
         }
 
-        public Car(string color) : this()
+        public string Name
         {
-            this.color = color;
-            Console.WriteLine("Constructor with color parameter called!");
+            get { return _name; }
+            set { _name = value; }
+        }
+
+        public Car(string name)
+        {
+            Name = name;
+            Console.WriteLine("Constructor with name parameter called!");
+        }
+
+        public Car(string color, string name)
+        {
+            Name = name;
+            _color = color;
+            Console.WriteLine($"Constructor with name and color parameter called! Color is:{0}", _color);
         }
 
         ~Car()

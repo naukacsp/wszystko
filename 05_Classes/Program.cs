@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _05_Classes
 {
@@ -10,15 +6,26 @@ namespace _05_Classes
     {
         private static void Main()
         {
-            Car skodaSuperb = new Car("black");
+            Car skodaSuperb = new Car("Mruczuś", "black");
             skodaSuperb.MakeSound();
-            Car audiA8 = new Audi();
+            Car audiA8 = new Audi("Red Lady");
             audiA8.MakeSound();
             UnusualCar googleCar = new SelfDrivingCar();
             Console.WriteLine(googleCar.Describe());
             //
             //Console.WriteLine(skodaSuperb.Describe);
             Console.Read();
+        }
+    }
+
+    internal interface ICar
+    {
+        string Describe();
+
+        string Name
+        {
+            get;
+            set;
         }
     }
 }
